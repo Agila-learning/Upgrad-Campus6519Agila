@@ -1,64 +1,57 @@
-//Create an abstract class 'Bank' with an abstract method 'getBalance'. 
-//$100, $150 and $200 are deposited in banks A, B and C respectively. 
-//'BankA', 'BankB' and 'BankC' are subclasses of class 'Bank', each having a method named 'getBalance'.
-// Call this method by creating an object of each of the three classes.
+import java.util.Scanner;
 
+ class Account {
+    private double savings;
+    private String name;
+    private String accountNumber;
 
+    public void initializeAccount(String name, String accountNumber) {
+        this.name = name;
+        this.accountNumber = accountNumber;
+    }
 
-public abstract class Bank {
+    public double deposit() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the amount to deposit: ");
+        double depositAmount = sc.nextDouble();
+        savings += depositAmount;
+        return savings;
+    }
 
-    abstract int getBalance(); 
-
-    static class BankA extends Bank {
-        int balance; 
-
-        BankA(int deposit) {
-            this.balance = deposit;
-        }
-
-        
-        int getBalance() {
-            System.out.println("BankA balance is: " + balance);
-            return balance;
+    public void withdrawal() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the amount to withdraw: ");
+        double withdrawalAmount = sc.nextDouble();
+        if (withdrawalAmount <= savings) {
+            savings -= withdrawalAmount;
+        } else {
+            System.out.println("Insufficient funds!");
         }
     }
 
-    static class BankB extends Bank {
-        int balance;
-
-        BankB(int deposit) {
-            this.balance = deposit;
-        }
-
-        
-        int getBalance() {
-            System.out.println("BankB balance is: " + balance);
-            return balance;
-        }
+    public void getinfo() {
+        System.out.println("Here is your information:");
+        System.out.println("Name: " + name);
+        System.out.println("Account Number: " + accountNumber);
+        System.out.println("Current Savings: " + savings);
     }
+}
 
-    static class BankC extends Bank {
-        int balance;
-
-        BankC(int deposit) {
-            this.balance = deposit;
-        }
-
-        
-        int getBalance() {
-            System.out.println("BankC balance is: " + balance);
-            return balance;
-        }
-    }
-
+public class Bank {
     public static void main(String[] args) {
-        BankA a = new BankA(100);
-        a.getBalance();
-        
-        BankB b = new BankB(200);
-        b.getBalance();
-        
-        BankC c = new BankC(300);
-        c.getBalance();
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter your name: ");
+        String name = sc.nextLine();
+
+        System.out.println("Enter your bank account number: ");
+        String accountNumber = sc.nextLine();
+
+        Account acc = new Account();
+        acc.initializeAccount(name, accountNumber);
+
+        acc.deposit();
+        acc.withdrawal();
+        acc.getinfo();
     }
 }
